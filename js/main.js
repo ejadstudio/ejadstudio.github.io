@@ -330,7 +330,7 @@
   function renderContact() {
     const c = D.contact;
     const links = [
-      `<a class="pill pill--main magnetic" href="https://wa.me/${c.whatsapp}" target="_blank" rel="noopener">${t("contact.whatsapp")} <small>${c.phoneDisplay}</small></a>`,
+      `<a class="pill pill--main magnetic" href="wa/" target="_blank" rel="noopener">${t("contact.whatsapp")} <small>${c.phoneDisplay}</small></a>`,
       `<a class="pill magnetic" href="mailto:${c.email}">${t("contact.email")} <small>${c.email}</small></a>`
     ];
     if (c.instagram) links.push(`<a class="pill magnetic" href="${c.instagram}" target="_blank" rel="noopener">${t("contact.instagram")} <small>${c.handle || "↗"}</small></a>`);
