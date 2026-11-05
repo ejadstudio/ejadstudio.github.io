@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>إيجاد | استوديو إبداعي سعودي</title>
-<meta name="description" content="إيجاد استوديو إبداعي سعودي للهوية والبراندنق والموشن. EJAD is a Saudi creative studio for identity, branding and motion.">
+<meta name="description" content="إيجاد استوديو إبداعي سعودي متخصص في الهوية البصرية واستراتيجية العلامات والموشن. EJAD is a Saudi creative studio specialising in visual identity, brand strategy and motion.">
 <meta name="theme-color" content="#0b0907">
 <meta property="og:type" content="website">
 <meta property="og:title" content="EJAD Studio — إيجاد">
-<meta property="og:description" content="Brands built to be recognized. علامات تُبنى لتُعرف.">
+<meta property="og:description" content="Brands built to be recognised. علامات تُبنى لتُعرف.">
 <meta property="og:image" content="https://ejad.pages.dev/assets/hero-poster.webp">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon.png" type="image/png" sizes="64x64">
@@ -17,6 +17,8 @@
 <link rel="preload" href="assets/hero-poster.webp" as="image" fetchpriority="high">
 <link rel="stylesheet" href="css/style.css">
 <script>
+  // touch screens: the hero video scrolls with the page instead of being resized while fixed (iOS Safari paints that wrongly)
+  if (matchMedia("(hover: none) and (pointer: coarse)").matches) document.documentElement.classList.add("th");
   // decide before first paint: skip the intro on repeat visits (no flash of the intro then a jump)
   try { if (sessionStorage.getItem("ejad-intro") === "1" || matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("no-intro"); } catch (e) {}
 </script>
@@ -35,6 +37,7 @@
 <div class="intro" aria-hidden="true">
   <div class="mesh"><b></b><b></b><b></b><b></b><b></b></div>
   <div class="intro__mark"><i></i><i></i><i></i><i></i></div>
+  <p class="intro__line" data-intro-line></p>
   <div class="intro__curtain"><i></i><i></i><i></i><i></i></div>
 </div>
 
@@ -60,6 +63,7 @@
 
   <!-- الواجهة -->
   <section class="hero" data-hero>
+    <div class="hero__bg" data-hero-bg aria-hidden="true"></div>
     <div class="hero__content wrap">
       <p class="kicker kicker--center" data-i18n="hero.kicker"></p>
       <h1 class="display slice" data-i18n="hero.title"></h1>

@@ -26,7 +26,7 @@
   function applyLang() {
     root.lang = lang;
     root.dir = lang === "ar" ? "rtl" : "ltr";
-    document.title = lang === "ar" ? "إيجاد | استوديو إبداعي سعودي" : "EJAD Studio | A Saudi creative studio";
+    document.title = lang === "ar" ? "إيجاد | استوديو إبداعي سعودي" : "EJAD Studio | A Saudi Creative Studio";
     $$("[data-i18n]").forEach((el) => { el.innerHTML = t(el.dataset.i18n); });
     $$("[data-i18n-aria]").forEach((el) => el.setAttribute("aria-label", t(el.dataset.i18nAria)));
     $$(".slice").forEach(splitSlice);
@@ -123,7 +123,7 @@
   /* ---------- stage (hero columns → nav) ---------- */
   const stage = $("[data-stage]"), hero = $("[data-hero]");
   function renderHero() {
-    const box = $("[data-hero-media]");
+    const box = root.classList.contains("th") ? $("[data-hero-bg]") : $("[data-hero-media]");
     box.innerHTML = D.hero.video
       ? `<video autoplay muted loop playsinline preload="auto" poster="${D.hero.image}"><source src="${D.hero.video}" type="video/mp4"></video>`
       : `<img src="${D.hero.image}" alt="" fetchpriority="high">`;
@@ -136,7 +136,7 @@
     stage.style.setProperty("--p", p.toFixed(4));
     stage.style.setProperty("--lp", clamp((p - 0.62) / 0.38).toFixed(3));
     stage.classList.toggle("is-docked", p >= 0.98);
-    const hv = stage.querySelector("video");
+    const hv = $("[data-hero-media] video, [data-hero-bg] video");
     if (hv) {
       const want = p < 0.98;
       if (want !== heroWant) { heroWant = want; want ? hv.play().catch(() => {}) : hv.pause(); }
@@ -434,6 +434,8 @@
   const fontsReady = () => Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 900))]);
   function runIntro() {
     const intro = $(".intro");
+    const tag = D.ui["intro.tagline"];
+    $("[data-intro-line]", intro).innerHTML = `<span>${tag.ar}</span><span>${tag.en}</span>`;
     let seen = false;
     try { seen = sessionStorage.getItem("ejad-intro") === "1"; sessionStorage.setItem("ejad-intro", "1"); } catch {}
     if (reduce || seen) { intro.remove(); fontsReady().then(finishIntro); return; }
@@ -446,7 +448,7 @@
     };
     intro.addEventListener("click", close);
     // close after the mark has formed, but never before the fonts are in
-    Promise.all([fontsReady(), new Promise((r) => setTimeout(r, 1900))]).then(close);
+    Promise.all([fontsReady(), new Promise((r) => setTimeout(r, 2500))]).then(close);
   }
 
   /* ---------- init ---------- */
