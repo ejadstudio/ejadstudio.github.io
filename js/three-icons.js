@@ -179,8 +179,28 @@ addEventListener("resize", () => renderer.setSize(innerWidth, innerHeight, false
 
 /* ---------- render loop ---------- */
 const clock = new THREE.Clock();
-let drewLast = true;
+let drewLast = true, dead = false, confirmed = false;
+// a lost context cannot get its reflection maps back: fall back to the still renders for this visit
+canvas.addEventListener("webglcontextlost", () => {
+  dead = true;
+  document.documentElement.classList.remove("gl-on");
+  canvas.style.display = "none";
+});
+// only hide the stills once real pixels reached the canvas
+function confirmDrawn(r, y) {
+  const gl = renderer.getContext(), pr = renderer.getPixelRatio();
+  // only the part on screen: a tall object can be larger than the viewport
+  const x0 = Math.max(0, r.left), y0 = Math.max(0, y);
+  const x1 = Math.min(innerWidth, r.right), y1 = Math.min(innerHeight, y + r.height);
+  const w = Math.floor((x1 - x0) * pr), h = Math.floor((y1 - y0) * pr);
+  if (w < 1 || h < 1) return false;
+  const px = new Uint8Array(w * h * 4);
+  gl.readPixels(Math.floor(x0 * pr), Math.floor(y0 * pr), w, h, gl.RGBA, gl.UNSIGNED_BYTE, px);
+  for (let i = 3; i < px.length; i += 4) if (px[i] > 8) return true;
+  return false;
+}
 function frame() {
+  if (dead) return;
   requestAnimationFrame(frame);
   const t = S.reduce ? 0 : clock.getElapsedTime();
   const H = innerHeight, W = innerWidth;
@@ -207,6 +227,10 @@ function frame() {
     renderer.setViewport(r.left, y, r.width, r.height);
     renderer.setScissor(r.left, y, r.width, r.height);
     renderer.render(o.scene, o.camera);
+    if (!confirmed && confirmDrawn(r, y)) {
+      confirmed = true;
+      document.documentElement.classList.add("gl-on");
+    }
   }
 }
 frame();

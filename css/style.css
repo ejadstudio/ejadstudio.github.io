@@ -244,6 +244,14 @@ html[lang="ar"] .statement { font-weight: 700; line-height: 1.35; letter-spacing
 .statement .w { display: inline-block; opacity: .15; transition: opacity .5s var(--ease); }
 .statement .w.on { opacity: 1; }
 .obj { pointer-events: none; }
+/* still renders show when the live 3D cannot draw on a device; the live canvas replaces them once it has really drawn */
+[data-obj] { background: center / contain no-repeat; }
+[data-obj="knot"] { background-image: url(../assets/obj/knot.webp); background-size: min(86%, 620px) auto; }
+[data-obj="bars"] { background-image: url(../assets/obj/bars.webp); }
+[data-obj="blocks"] { background-image: url(../assets/obj/blocks.webp); }
+[data-obj="prism"] { background-image: url(../assets/obj/prism.webp); }
+[data-obj="ring"] { background-image: url(../assets/obj/ring.webp); }
+html.gl-on [data-obj] { background-image: none; }
 .obj--about { position: absolute; inset: 0; z-index: 0; }
 .about .statement, .about .lead { text-shadow: 0 2px 28px rgba(11, 9, 7, .9), 0 0 2px rgba(11, 9, 7, .6); }
 .section__head { position: relative; }
@@ -508,7 +516,7 @@ html.th main > .hero { z-index: 2; opacity: 1; transform: none; pointer-events: 
 html.th .hero__content { position: relative; z-index: 1; opacity: var(--ho, 1); transform: translateY(calc((1 - var(--ho, 1)) * -60px)); pointer-events: var(--hpe, auto); }
 html.th .hero__bg { display: block; position: absolute; inset: 0; overflow: hidden; background: var(--bg); }
 html.th .hero-video { position: absolute; inset: 0; }
-html.th .hero__bg::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(rgba(11, 9, 7, .48), rgba(11, 9, 7, .38) 45%, rgba(11, 9, 7, .66)); }
+html.th .hero__bg::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(rgba(11, 9, 7, .35), rgba(11, 9, 7, .15) 45%, rgba(11, 9, 7, .55)); }
 
 /* the tagline's fill-forwards animation overrides opacity, so it must be cancelled when the intro opens */
 .intro.is-open .intro__line { animation: none; opacity: 0; filter: none; visibility: hidden; transition: none; }

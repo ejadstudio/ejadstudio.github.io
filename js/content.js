@@ -17,7 +17,7 @@ window.EJAD = {
 
   /* ---------- الواجهة ---------- */
   hero: {
-    // فيديو واحد فيه الأعمدة الأربعة: wide للشاشات العريضة و tall للجوال (مربعين فوق مربعين)
+    // فيديو واحد فيه الأعمدة الأربعة: wide للشاشات العريضة و tall للجوال
     wide: { video: "assets/hero/hero-wide.mp4", poster: "assets/hero/hero-wide.webp" },
     tall: { video: "assets/hero/hero-tall.mp4", poster: "assets/hero/hero-tall.webp" }
   },
