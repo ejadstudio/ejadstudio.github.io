@@ -225,6 +225,7 @@ main > .hero { position: relative; z-index: 55; height: 100svh; min-height: 620p
 .hero .display { max-width: 14ch; margin-inline: auto; text-shadow: 0 4px 40px rgba(11, 9, 7, .35); }
 .hero .lead { color: var(--ink); opacity: .85; }
 .hero__ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 36px; }
+.hero__ctas .pill { width: auto; height: 46px; padding-inline: 22px; font-size: 14px; white-space: nowrap; }
 @keyframes drip { from { transform: translateY(-100%); } to { transform: translateY(100%); } }
 
 /* ---------- about ---------- */
