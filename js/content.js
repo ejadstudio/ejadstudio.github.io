@@ -17,8 +17,13 @@ window.EJAD = {
 
   /* ---------- الواجهة ---------- */
   hero: {
-    image: "assets/hero-poster.webp",   // تظهر لين يحمّل المقطع
-    video: "assets/hero.mp4"            // مقطع الصحراء
+    // كل عمود = فيديو وصورة أولية بنفس الرقم
+    columns: [
+      { video: "assets/hero/hero-1.mp4", poster: "assets/hero/hero-1.webp" },
+      { video: "assets/hero/hero-2.mp4", poster: "assets/hero/hero-2.webp" },
+      { video: "assets/hero/hero-3.mp4", poster: "assets/hero/hero-3.webp" },
+      { video: "assets/hero/hero-4.mp4", poster: "assets/hero/hero-4.webp" }
+    ]
   },
 
   /* ---------- نصوص الواجهة ---------- */
