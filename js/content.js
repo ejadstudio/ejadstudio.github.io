@@ -17,13 +17,9 @@ window.EJAD = {
 
   /* ---------- الواجهة ---------- */
   hero: {
-    // كل عمود = فيديو وصورة أولية بنفس الرقم
-    columns: [
-      { video: "assets/hero/hero-1.mp4", poster: "assets/hero/hero-1.webp" },
-      { video: "assets/hero/hero-2.mp4", poster: "assets/hero/hero-2.webp" },
-      { video: "assets/hero/hero-3.mp4", poster: "assets/hero/hero-3.webp" },
-      { video: "assets/hero/hero-4.mp4", poster: "assets/hero/hero-4.webp" }
-    ]
+    // فيديو واحد فيه الأعمدة الأربعة: wide للشاشات العريضة و tall للجوال (مربعين فوق مربعين)
+    wide: { video: "assets/hero/hero-wide.mp4", poster: "assets/hero/hero-wide.webp" },
+    tall: { video: "assets/hero/hero-tall.mp4", poster: "assets/hero/hero-tall.webp" }
   },
 
   /* ---------- نصوص الواجهة ---------- */

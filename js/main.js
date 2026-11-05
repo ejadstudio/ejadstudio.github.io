@@ -124,22 +124,16 @@
   const stage = $("[data-stage]"), hero = $("[data-hero]");
   function renderHero() {
     const box = root.classList.contains("th") ? $("[data-hero-bg]") : $("[data-hero-media]");
-    box.innerHTML = `<div class="hero-cols">${D.hero.columns.map((c) => `<video muted loop playsinline preload="auto" poster="${c.poster}"><source src="${c.video}" type="video/mp4"></video>`).join("")}</div>`;
-    // the column loops are phase-shifted, so they must start together for the cuts to run in order
-    const vids = $$("video", box);
-    let ready = 0, started = false;
-    const start = () => {
-      if (started) return;
-      started = true;
-      if (heroWant) vids.forEach((v) => { v.currentTime = 0; v.play().catch(() => {}); });
-    };
-    vids.forEach((v) => {
-      v.muted = true; // iOS needs the property, not only the attribute
-      if (v.readyState >= 3) ready++;
-      else v.addEventListener("canplay", () => { if (++ready === vids.length) start(); }, { once: true });
-    });
-    if (ready === vids.length) start();
-    setTimeout(start, 3000); // a slow column must not hold the others back
+    const m = D.hero[matchMedia("(max-aspect-ratio: 1/1)").matches ? "tall" : "wide"];
+    box.innerHTML = `<video class="hero-video" muted loop playsinline preload="none" poster="${m.poster}"></video>`;
+    const v = $("video", box);
+    v.muted = true; // iOS needs the property, not only the attribute
+    v.addEventListener("canplay", () => { if (heroWant) v.play().catch(() => {}); }, { once: true });
+    // the host ignores range requests, so the whole file is loaded first; then playback and the loop never wait on the network
+    fetch(m.video)
+      .then((r) => (r.ok ? r.blob() : Promise.reject()))
+      .then((b) => { v.src = URL.createObjectURL(b); })
+      .catch(() => { v.src = m.video; });
   }
   let vh = innerHeight, bar = 64, heroWant = true;
   function updateStage(y) {
@@ -152,7 +146,8 @@
     const want = p < 0.98;
     if (want !== heroWant) {
       heroWant = want;
-      $$(".hero-cols video").forEach((v) => (want ? v.play().catch(() => {}) : v.pause()));
+      const hv = $(".hero-video");
+      if (hv) want ? hv.play().catch(() => {}) : hv.pause();
     }
     const ho = 1 - clamp(p * 1.9);
     hero.style.setProperty("--ho", ho.toFixed(3));

@@ -182,15 +182,14 @@ html[lang="ar"] .hl__b { font-weight: 800; }
 /* ---------- stage: 4 columns → nav (Swiss + Bou) ---------- */
 .stage { position: fixed; top: 0; inset-inline: 0; z-index: 50; height: var(--sh, 100vh); overflow: hidden; background: var(--bg); }
 .stage__media { position: absolute; inset: 0 0 auto; height: var(--vh, 100vh); transform: translateY(calc(var(--p, 0) * -18%)); }
-/* one video per column; the grade is baked into the files */
-.hero-cols { display: grid; grid-template-columns: repeat(4, 1fr); width: 100%; height: 100%; background: var(--bg); }
-.hero-cols video { display: block; width: 100%; height: 100%; min-width: 0; min-height: 0; object-fit: cover; }
+/* one video holds all four columns (gaps included) so the browser runs a single decoder; the grade is baked in */
+.hero-video { display: block; width: 100%; height: 100%; object-fit: cover; }
 .stage__shade { position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(rgba(11, 9, 7, calc(.35 + var(--p, 0) * .35)), rgba(11, 9, 7, calc(.15 + var(--p, 0) * .5)) 45%, rgba(11, 9, 7, calc(.55 + var(--p, 0) * .2))); }
 .stage::after { content: ""; position: absolute; inset: 0; background: rgba(11, 9, 7, .9); opacity: var(--lp, 0); pointer-events: none; }
 .stage.is-docked { box-shadow: inset 0 -1px 0 var(--line); }
 .stage__cols { position: absolute; inset: 0; z-index: 1; display: grid; grid-template-columns: repeat(4, 1fr); }
-.col { position: relative; display: flex; align-items: center; justify-content: center; gap: 10px; border-inline-end: 6px solid var(--bg); transition: background .4s; }
+.col { position: relative; display: flex; align-items: center; justify-content: center; gap: 10px; border-inline-end: 6px solid transparent; transition: background .4s; }
 .col:last-child { border-inline-end: 0; }
 .col::after { content: ""; position: absolute; inset: 0; background: var(--bg); transform: scaleY(var(--cv, 0)); transform-origin: top; pointer-events: none; }
 .col__label { font-size: 14px; font-weight: 400; color: var(--ink-2); transition: color .3s; opacity: var(--lp, 0); transform: translateY(calc((1 - var(--lp, 0)) * 12px)); white-space: nowrap; }
@@ -225,7 +224,9 @@ main > .hero { position: relative; z-index: 55; height: 100svh; min-height: 620p
 .hero .display { max-width: 14ch; margin-inline: auto; text-shadow: 0 4px 40px rgba(11, 9, 7, .35); }
 .hero .lead { color: var(--ink); opacity: .85; }
 .hero__ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 36px; }
-.hero__ctas .pill { width: auto; height: 46px; padding-inline: 22px; font-size: 14px; white-space: nowrap; }
+.hero__ctas .pill { width: auto; height: 46px; padding-inline: 22px; font-size: 14px; white-space: nowrap; backdrop-filter: none; background: rgba(11, 9, 7, .42); }
+.hero__ctas .pill--main { background: var(--accent); }
+.hero__ctas .pill:hover { background: var(--ink); }
 @keyframes drip { from { transform: translateY(-100%); } to { transform: translateY(100%); } }
 
 /* ---------- about ---------- */
@@ -506,8 +507,7 @@ html.th .col { border-inline-end: 0; }
 html.th main > .hero { z-index: 2; opacity: 1; transform: none; pointer-events: auto; }
 html.th .hero__content { position: relative; z-index: 1; opacity: var(--ho, 1); transform: translateY(calc((1 - var(--ho, 1)) * -60px)); pointer-events: var(--hpe, auto); }
 html.th .hero__bg { display: block; position: absolute; inset: 0; overflow: hidden; background: var(--bg); }
-html.th .hero-cols { position: absolute; inset: 0; gap: 6px; }
-@media (max-width: 899px) { html.th .hero-cols { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); } }
+html.th .hero-video { position: absolute; inset: 0; }
 html.th .hero__bg::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(rgba(11, 9, 7, .48), rgba(11, 9, 7, .38) 45%, rgba(11, 9, 7, .66)); }
 
 /* the tagline's fill-forwards animation overrides opacity, so it must be cancelled when the intro opens */
