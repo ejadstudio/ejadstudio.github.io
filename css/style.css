@@ -233,8 +233,13 @@ main > .hero { position: relative; z-index: 55; height: 100svh; min-height: 620p
 .about__inner { text-align: center; z-index: 2; isolation: isolate; }
 .about__inner::before { content: ""; position: absolute; z-index: -1; inset: -12% 0; pointer-events: none;
   background: radial-gradient(ellipse 52% 50% at 50% 50%, rgba(11, 9, 7, .62), rgba(11, 9, 7, .3) 60%, transparent 78%); }
-.statement { font-weight: 300; margin: 0 auto; max-width: 22ch; font-size: clamp(32px, 4.6vw, 70px); line-height: 1.2; letter-spacing: -.02em; }
-html[lang="ar"] .statement { font-weight: 500; line-height: 1.5; letter-spacing: 0; max-width: 20ch; }
+.statement { font-weight: 400; margin: 0 auto; font-size: clamp(44px, 6vw, 88px); line-height: 1.2; letter-spacing: -.02em; text-wrap: balance; }
+html[lang="ar"] .statement { font-weight: 700; line-height: 1.35; letter-spacing: 0; }
+.about .lead { text-wrap: balance; max-width: 44ch; margin-top: clamp(20px, 2vw, 30px); font-size: clamp(18px, 1.55vw, 22px); line-height: 1.75; color: var(--ink); }
+@media (max-width: 640px) {
+  html[lang="ar"] .statement { font-size: 9vw; white-space: nowrap; }
+  html[lang="en"] .statement { font-size: 8.4vw; white-space: nowrap; }
+}
 .statement .w { display: inline-block; opacity: .15; transition: opacity .5s var(--ease); }
 .statement .w.on { opacity: 1; }
 .obj { pointer-events: none; }
@@ -505,3 +510,6 @@ html.th .hero__bg video, html.th .hero__bg img { position: absolute; inset: 0; w
 html.th .hero__bg::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(rgba(11, 9, 7, .58), rgba(11, 9, 7, .46) 45%, rgba(11, 9, 7, .74)); }
 html.th .hero__bg::after { content: ""; position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(var(--bg), var(--bg)) 25% 0 / 6px 100% no-repeat, linear-gradient(var(--bg), var(--bg)) 50% 0 / 6px 100% no-repeat, linear-gradient(var(--bg), var(--bg)) 75% 0 / 6px 100% no-repeat; }
+
+/* the tagline's fill-forwards animation overrides opacity, so it must be cancelled when the intro opens */
+.intro.is-open .intro__line { animation: none; opacity: 0; filter: none; visibility: hidden; transition: none; }

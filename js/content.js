@@ -39,10 +39,10 @@ window.EJAD = {
     "hero.cta2":     { ar: "تواصل معنا", en: "Contact us" },
 
     "about.kicker":  { ar: "فلسفتنا", en: "Our philosophy" },
-    "about.title":   { ar: "قبل الشعار والألوان نبدأ بـ<em>الوضوح</em>: ماذا تقول علامتك ولمن تقوله.",
-                       en: "Before the logo and the colours comes <em>clarity</em>: what your brand says and to whom." },
-    "about.sub":     { ar: "نوجز القول ونترك أعمالنا تعبّر عنا.",
-                       en: "We say little and let our work speak for us." },
+    "about.title":   { ar: "<em>الوضوح</em> قبل التصميم.",
+                       en: "<em>Clarity</em> before design." },
+    "about.sub":     { ar: "قبل الشعار والألوان نحدد ما تقوله علامتك ولمن تقوله ثم ندع أعمالنا تعبّر عنا.",
+                       en: "Before the logo and the colours we define what your brand says and to whom and then let our work speak for itself." },
 
     "work.kicker":   { ar: "أعمال مختارة", en: "Selected work" },
     "work.title":    { ar: "هويات بُنيت<br>بهدف.", en: "Identities built<br>with purpose." },
