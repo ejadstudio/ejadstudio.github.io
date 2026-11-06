@@ -73,6 +73,7 @@ window.EJAD = {
     "contact.instagram":{ ar: "إنستغرام", en: "Instagram" },
     "contact.tiktok":  { ar: "تيك توك", en: "TikTok" },
     "footer.rights":   { ar: "© 2026 استوديو إيجاد", en: "© 2026 EJAD Studio" },
+    "footer.privacy":  { ar: "نستخدم أدوات إحصاء من Microsoft وCloudflare لفهم استخدام الموقع وتحسينه، وتشمل تسجيل النقرات والتصفح.", en: "We use analytics tools from Microsoft and Cloudflare to understand and improve this site, including recording clicks and browsing." },
     "footer.top":      { ar: "العودة إلى الأعلى", en: "Back to top" }
   },
 
