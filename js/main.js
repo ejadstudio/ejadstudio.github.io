@@ -125,15 +125,25 @@
   function renderHero() {
     const box = root.classList.contains("th") ? $("[data-hero-bg]") : $("[data-hero-media]");
     const m = D.hero[matchMedia("(max-aspect-ratio: 1/1)").matches ? "tall" : "wide"];
-    box.innerHTML = `<video class="hero-video" muted loop playsinline preload="none" poster="${m.poster}"></video>`;
+    box.innerHTML = `<video class="hero-video" muted autoplay loop playsinline preload="auto" poster="${m.poster}"></video>`;
     const v = $("video", box);
     v.muted = true; // iOS needs the property, not only the attribute
-    v.addEventListener("canplay", () => { if (heroWant) v.play().catch(() => {}); }, { once: true });
+    // iOS loads nothing until play() is called, so never wait for a "canplay" event first
+    const start = () => { if (heroWant) v.play().catch(() => {}); };
+    const direct = () => { v.src = m.video; v.load(); start(); };
     // the host ignores range requests, so the whole file is loaded first; then playback and the loop never wait on the network
     fetch(m.video)
       .then((r) => (r.ok ? r.blob() : Promise.reject()))
-      .then((b) => { v.src = URL.createObjectURL(b); })
-      .catch(() => { v.src = m.video; });
+      .then((b) => {
+        v.src = URL.createObjectURL(b);
+        v.load();
+        start();
+        setTimeout(() => { if (heroWant && !v.currentTime) direct(); }, 4000); // a browser that refuses the blob plays the file directly
+      })
+      .catch(direct);
+    // autoplay can be refused (iOS Low Power Mode) and iOS pauses video in the background: retry on touch and on return
+    ["touchstart", "pointerdown"].forEach((e) => addEventListener(e, () => { if (v.paused) start(); }, { passive: true }));
+    document.addEventListener("visibilitychange", () => { if (!document.hidden && v.paused) start(); });
   }
   let vh = innerHeight, bar = 64, heroWant = true;
   function updateStage(y) {
